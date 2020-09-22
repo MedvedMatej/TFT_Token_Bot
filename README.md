@@ -17,9 +17,9 @@
   Under Assets folder you can find different pictures that the script is looking for on the screen. Yours may differ so in case the script is not working properly make screenshots of your own game and replace them.
 
 ## PREREQUISITES
-  If you don't have all the packages that are required installed here is the list of the ones you need:
-    pip install keyboard
-    pip install pyautogui
+  If you don't have all the packages that are required installed here is the list of the ones you need:  
+    pip install keyboard  
+    pip install pyautogui  
     pip install opencv-python
 
 # Note:
