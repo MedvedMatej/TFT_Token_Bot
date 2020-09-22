@@ -23,4 +23,4 @@
     pip install opencv-python
 
 # Note:
-You are using this on your own behalf. I am not held responsible for anything that may happen to you League of Legends account.
+You are using this on your own behalf. I am not held responsible for anything that may happen to your League of Legends account.
