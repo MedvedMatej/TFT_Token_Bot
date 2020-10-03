@@ -2,69 +2,80 @@ import pyautogui
 from time import sleep
 import keyboard
 
-pause = False
+class TFT_Bot():
+    def __init__(self,hotkey):
+        self.running = False
+        print("Status: not running")
+        keyboard.add_hotkey(hotkey,lambda : self._statusChange())
 
-print(pause)
+    def _statusChange(self):
+        self.runnning = not self.running
+        if self.running:
+            print("Status: Running")
+        else:
+            print("Status: Not running")
 
-def change():
-    global pause
-    pause = not pause
-    print(pause)
+    def returnStatus(self):
+        return self.running
 
-keyboard.add_hotkey('page up', lambda: change())
-keyboard.add_hotkey('esc', lambda: exit())
-while 1:
-
+    def _click(x,y):
+        pyautogui.moveTo(x,y)
+        sleep(0.1)
+        pyautogui.mouseDown()
+        sleep(0.5)
+        pyautogui.mouseUp()
+        sleep(0.1)
+        pyautogui.moveTo(1,1)
     
-    if pause == True:
-        find = pyautogui.locateOnScreen('Assets/find.png',confidence=0.9)
+    def _locateImages(self):
+        #find match, play, play again
+        try:
+            x,y = pyautogui.locateCenterOnScreen('Assets/findMatch.png',confidence=0.9,grayscale=True)
+            self._click(x,y)
 
-        if find != None:
-            find_location = pyautogui.center(find)
-            pyautogui.click(x=find_location.x,y=find_location.y)
-            sleep(1)
-            pyautogui.moveTo(100, 200)
+        except ImageNotFoundException:
+            pass
         
-        accept = pyautogui.locateOnScreen('Assets/accept.png',confidence=0.9)
+        #accept match
+        try:
+            x,y = pyautogui.locateCenterOnScreen('Assets/acceptMatch.png',confidence=0.9,grayscale=True)
+            self._click(x,y)
 
-        if accept != None:
-            accept_location = pyautogui.center(accept)
-            pyautogui.click(x=accept_location.x,y=accept_location.y)
-            sleep(5)
-            pyautogui.moveTo(100, 200)
+        except ImageNotFoundException:
+            pass
 
-        _exit = pyautogui.locateOnScreen('Assets/exit.png',confidence=0.9)
+        #annoying mission complete OK button
+        try:
+            x,y = pyautogui.locateCenterOnScreen('Assets/ok.png',confidence=0.9,grayscale=True)
+            self._click(x,y)
 
-        if _exit != None:
-            _exit_location = pyautogui.center(_exit)
-            pyautogui.moveTo(_exit_location.x,_exit_location.y)
-            pyautogui.mouseDown()
-            sleep(0.5)
-            pyautogui.mouseUp()
-            sleep(2)
-            pyautogui.moveTo(100,200)
-            sleep(0.5)
+        except ImageNotFoundException:
+            pass
 
-        buy = pyautogui.locateOnScreen('Assets/buy.png',confidence = 0.9)
+        #exit game
+        try:
+            x,y = pyautogui.locateCenterOnScreen('Assets/exitGame.png',confidence=0.9,grayscale=True)
+            self._click(x,y)
 
-        if buy != None:
-            buy_location = pyautogui.center(buy)
-            pyautogui.moveTo(buy_location.x,buy_location.y-50)
-            sleep(1)
-            pyautogui.mouseDown()
-            sleep(0.5)
-            pyautogui.mouseUp()
-            sleep(5)
-            pyautogui.moveTo(143,234)
+        except ImageNotFoundException:
+            pass
+        
+        #buy unit
+        try:
+            x,y = pyautogui.locateCenterOnScreen('Assets/buyUnit.png',confidence=0.9,grayscale=True)
+            self._click(x,y)
 
-        ok = pyautogui.locateOnScreen('Assets/ok.png',confidence = 0.9)
+        except ImageNotFoundException:
+            pass
 
-        if ok != None:
-            ok_location = pyautogui.center(ok)
-            pyautogui.moveTo(ok_location.x,ok_location.y)
-            sleep(1)
-            pyautogui.mouseDown()
-            sleep(0.5)
-            pyautogui.mouseUp()
-            sleep(2)
-            pyautogui.moveTo(143,234)
+
+def main():
+    TFT_Bot x('page up')
+
+    while True:
+        if x.returnStatus:
+            x._locateImages()
+
+
+if __name__=="__main__": 
+    main()
