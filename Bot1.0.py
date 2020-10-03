@@ -18,7 +18,7 @@ class TFT_Bot():
     def returnStatus(self):
         return self.running
 
-    def _click(x,y):
+    def _click(self,x,y):
         pyautogui.moveTo(x,y)
         sleep(0.1)
         pyautogui.mouseDown()
@@ -70,7 +70,7 @@ class TFT_Bot():
 
 
 def main():
-    TFT_Bot x('page up')
+    x = TFT_Bot('page up')
 
     while True:
         if x.returnStatus:
