@@ -27,54 +27,26 @@ class TFT_Bot():
         sleep(0.1)
         pyautogui.moveTo(1,1)
     
-    def _locateImages(self):
-        #find match, play, play again
+    def _locateImage(self,imageName):
+        image = "Assets/" + imageName + ".png"
         try:
-            x,y = pyautogui.locateCenterOnScreen('Assets/findMatch.png',confidence=0.9,grayscale=True)
+            x,y = pyautogui.locateCenterOnScreen(image,confidence=0.9,grayscale=True)
             self._click(x,y)
 
         except ImageNotFoundException:
             pass
-        
-        #accept match
-        try:
-            x,y = pyautogui.locateCenterOnScreen('Assets/acceptMatch.png',confidence=0.9,grayscale=True)
-            self._click(x,y)
-
-        except ImageNotFoundException:
-            pass
-
-        #annoying mission complete OK button
-        try:
-            x,y = pyautogui.locateCenterOnScreen('Assets/ok.png',confidence=0.9,grayscale=True)
-            self._click(x,y)
-
-        except ImageNotFoundException:
-            pass
-
-        #exit game
-        try:
-            x,y = pyautogui.locateCenterOnScreen('Assets/exitGame.png',confidence=0.9,grayscale=True)
-            self._click(x,y)
-
-        except ImageNotFoundException:
-            pass
-        
-        #buy unit
-        try:
-            x,y = pyautogui.locateCenterOnScreen('Assets/buyUnit.png',confidence=0.9,grayscale=True)
-            self._click(x,y)
-
-        except ImageNotFoundException:
-            pass
-
+ 
 
 def main():
     x = TFT_Bot('page up')
 
     while True:
         if x.returnStatus:
-            x._locateImages()
+            x._locateImage('acceptMatch')
+            x._locateImage('findMatch')
+            x._locateImage('buyUnit')
+            x._locateImage('exitGame')
+            x._locateImage('ok')
 
 
 if __name__=="__main__": 
