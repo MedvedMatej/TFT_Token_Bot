@@ -5,11 +5,11 @@ import keyboard
 class TFT_Bot():
     def __init__(self,hotkey):
         self.running = False
-        print("Status: not running")
+        print("Status: Not running")
         keyboard.add_hotkey(hotkey,lambda : self._statusChange())
 
     def _statusChange(self):
-        self.runnning = not self.running
+        self.running = not self.running
         if self.running:
             print("Status: Running")
         else:
@@ -41,7 +41,7 @@ def main():
     x = TFT_Bot('page up')
 
     while True:
-        if x.returnStatus:
+        if x.returnStatus():
             x._locateImage('acceptMatch')
             x._locateImage('findMatch')
             x._locateImage('buyUnit')
