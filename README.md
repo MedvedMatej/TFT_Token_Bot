@@ -8,8 +8,7 @@
   6. It clicks play again
   
 # How to use:
-  Press "page up" button to start/pause the script. By default it starts in paused mode.
-  Press "esc" to terminate the script.
+  Press "page up" button to start/pause the script. By default it starts in paused mode. This can be changed in script by changing what we pass into the constructor.
   
   Under Assets folder you can find different pictures that the script is looking for on the screen. Yours may differ so in case the script is not working properly make screenshots of your own game and replace them.
 
