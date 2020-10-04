@@ -33,7 +33,7 @@ class TFT_Bot():
             x,y = pyautogui.locateCenterOnScreen(image,confidence=0.9,grayscale=True)
             self._click(x,y)
 
-        except ImageNotFoundException:
+        except TypeError:
             pass
  
 
