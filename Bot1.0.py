@@ -2,69 +2,52 @@ import pyautogui
 from time import sleep
 import keyboard
 
-pause = False
+class TFT_Bot():
+    def __init__(self,hotkey):
+        self.running = False
+        print("Status: Not running")
+        keyboard.add_hotkey(hotkey,lambda : self._statusChange())
 
-print(pause)
+    def _statusChange(self):
+        self.running = not self.running
+        if self.running:
+            print("Status: Running")
+        else:
+            print("Status: Not running")
 
-def change():
-    global pause
-    pause = not pause
-    print(pause)
+    def returnStatus(self):
+        return self.running
 
-keyboard.add_hotkey('page up', lambda: change())
-keyboard.add_hotkey('esc', lambda: exit())
-while 1:
-
+    def _click(self,x,y):
+        pyautogui.moveTo(x,y)
+        sleep(0.1)
+        pyautogui.mouseDown()
+        sleep(0.5)
+        pyautogui.mouseUp()
+        sleep(0.1)
+        pyautogui.moveTo(1,1)
     
-    if pause == True:
-        find = pyautogui.locateOnScreen('Assets/find.png',confidence=0.9)
+    def _locateImage(self,imageName):
+        image = "Assets/" + imageName + ".png"
+        try:
+            x,y = pyautogui.locateCenterOnScreen(image,confidence=0.9,grayscale=True)
+            self._click(x,y)
 
-        if find != None:
-            find_location = pyautogui.center(find)
-            pyautogui.click(x=find_location.x,y=find_location.y)
-            sleep(1)
-            pyautogui.moveTo(100, 200)
-        
-        accept = pyautogui.locateOnScreen('Assets/accept.png',confidence=0.9)
+        except TypeError:
+            pass
+ 
 
-        if accept != None:
-            accept_location = pyautogui.center(accept)
-            pyautogui.click(x=accept_location.x,y=accept_location.y)
-            sleep(5)
-            pyautogui.moveTo(100, 200)
+def main():
+    x = TFT_Bot('page up')
 
-        _exit = pyautogui.locateOnScreen('Assets/exit.png',confidence=0.9)
+    while True:
+        if x.returnStatus():
+            x._locateImage('acceptMatch')
+            x._locateImage('findMatch')
+            x._locateImage('buyUnit')
+            x._locateImage('exitGame')
+            x._locateImage('ok')
 
-        if _exit != None:
-            _exit_location = pyautogui.center(_exit)
-            pyautogui.moveTo(_exit_location.x,_exit_location.y)
-            pyautogui.mouseDown()
-            sleep(0.5)
-            pyautogui.mouseUp()
-            sleep(2)
-            pyautogui.moveTo(100,200)
-            sleep(0.5)
 
-        buy = pyautogui.locateOnScreen('Assets/buy.png',confidence = 0.9)
-
-        if buy != None:
-            buy_location = pyautogui.center(buy)
-            pyautogui.moveTo(buy_location.x,buy_location.y-50)
-            sleep(1)
-            pyautogui.mouseDown()
-            sleep(0.5)
-            pyautogui.mouseUp()
-            sleep(5)
-            pyautogui.moveTo(143,234)
-
-        ok = pyautogui.locateOnScreen('Assets/ok.png',confidence = 0.9)
-
-        if ok != None:
-            ok_location = pyautogui.center(ok)
-            pyautogui.moveTo(ok_location.x,ok_location.y)
-            sleep(1)
-            pyautogui.mouseDown()
-            sleep(0.5)
-            pyautogui.mouseUp()
-            sleep(2)
-            pyautogui.moveTo(143,234)
+if __name__=="__main__": 
+    main()

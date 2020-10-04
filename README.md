@@ -11,9 +11,6 @@
   Press "page up" button to start/pause the script. By default it starts in paused mode.
   Press "esc" to terminate the script.
   
-  If you are using the console version (.py) it will display the current state of the script in the console.
-  If you are using the hidden console version please note that there is no visual indication of the script's current state so keep that in mind.
-  
   Under Assets folder you can find different pictures that the script is looking for on the screen. Yours may differ so in case the script is not working properly make screenshots of your own game and replace them.
 
 ## PREREQUISITES
@@ -24,4 +21,4 @@
     pip install opencv-python
 
 # Note:
-You are using this on your own behalf. I am not held responsible for anything that may happen to your League of Legends account.
+You are using this on your own behalf. I am not held responsible for anything that may happen to your League of Legends (TFT) account.
