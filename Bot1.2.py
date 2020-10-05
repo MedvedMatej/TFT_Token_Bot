@@ -1,5 +1,6 @@
 import pyautogui
 from time import sleep
+from time import time
 import keyboard
 from itertools import cycle
 
@@ -13,6 +14,7 @@ class TFT_Bot():
         self.currentStage = next(self.cycle)
         self.nextStage = next(self.cycle)
         self.printStages()
+        self.lastAction = time()
 
     def _statusChange(self):
         self.running = not self.running
@@ -42,6 +44,7 @@ class TFT_Bot():
         try:
             x,y = pyautogui.locateCenterOnScreen(image,confidence=0.9,grayscale=True)
             self._click(x,y)
+            self.lastAction = time()
 
             if(imageName == self.nextStage):
                 self.currentStage = self.nextStage
@@ -51,7 +54,11 @@ class TFT_Bot():
 
         except TypeError:
             pass
- 
+            
+    def _recalibrateCurrentStage(self):
+        self.currentStage = self.nextStage
+        self.nextStage = next(self.cycle)
+
 
 def main():
     x = TFT_Bot('page up')
@@ -64,6 +71,10 @@ def main():
             if(x.currentStage == "exitGame"):
                 x._locateImage("ok")
 
+            if(time() - x.lastAction > 120):
+                x._recalibrateCurrentStage()
+        
+        print(x.currentStage)
 
 
 
