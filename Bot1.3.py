@@ -2,6 +2,7 @@ import pyautogui
 from time import sleep
 from time import time
 import keyboard
+from pynput.keyboard import Key, Controller
 from itertools import cycle
 import random
 
@@ -16,7 +17,7 @@ class TFT_Bot():
         self.nextStage = next(self.cycle)
         self.printStages()
         self.lastAction = time()
-        self.keyboard = keyboard.Controller()
+        self.keyboard = Controller()
 
     def _statusChange(self):
         self.running = not self.running
@@ -93,7 +94,6 @@ def main():
                 x._recalibrateCurrentStage()
         
         print(x.currentStage)
-
 
 
 if __name__=="__main__": 
