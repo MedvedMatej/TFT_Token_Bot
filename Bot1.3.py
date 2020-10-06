@@ -92,8 +92,6 @@ def main():
 
             if(time() - x.lastAction > 120):
                 x._recalibrateCurrentStage()
-        
-        print(x.currentStage)
 
 
 if __name__=="__main__": 
