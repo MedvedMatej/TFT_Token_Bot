@@ -14,6 +14,7 @@
 
 ## PREREQUISITES
   If you don't have all the packages that are required installed here is the list of the ones you need:    
+    pip install pynput  
     pip install keyboard  
     pip install wheel  
     pip install pyautogui  
