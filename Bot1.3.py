@@ -30,9 +30,6 @@ class TFT_Bot():
         print("Current Stage: " + self.currentStage)
         print("Next Stage: " + self.nextStage)
 
-    def returnStatus(self):
-        return self.running
-
     def _click(self,x,y):
         i = random.randint(0,5)
         j = random.randint(0,5)
@@ -44,7 +41,7 @@ class TFT_Bot():
         sleep(0.1)
         pyautogui.moveTo(200,200)
     
-    def _locateImage(self,imageName):
+    def _stageSearch(self,imageName):
         image = "Assets/" + imageName + ".png"
         try:
             x,y = pyautogui.locateCenterOnScreen(image,confidence=0.9,grayscale=True)
@@ -64,34 +61,34 @@ class TFT_Bot():
         self.currentStage = self.nextStage
         self.nextStage = next(self.cycle)
 
+    def _stageSpecificActions(self):
+        if(self.currentStage == "exitGame"):
+             self._stageSearch("ok")
+
+        if(self.currentStage == "acceptMatch"):
+            sleep(5)
+
+        if(self.currentStage == "buyUnit"):
+            #buy exp
+            #refresh units
+            #equip items
+            pass
+
 
 def main():
     x = TFT_Bot('page up')
 
     while True:
-        if x.returnStatus():
-            x._locateImage(x.currentStage)
-            x._locateImage(x.nextStage)
+        if x.running:
+            x._stageSearch(x.currentStage)
+            x._stageSearch(x.nextStage)
 
-            if(x.currentStage == "exitGame"):
-                x._locateImage("ok")
-
-            if(x.currentStage == "acceptMatch"):
-                sleep(5)
-
-
-            if(x.currentStage == "buyUnit"):
-                temp = random.randint(0,25)
-                if temp % 10 == 0:
-                    x.keyboard.press('f')
-                    x.keyboard.release('f')
-                if temp % 25 == 0:
-                    x.keyboard.press('d')
-                    x.keyboard.release('d')
-            
+            x._stageSpecificActions()
 
             if(time() - x.lastAction > 120):
                 x._recalibrateCurrentStage()
+
+                
 
 
 if __name__=="__main__": 
